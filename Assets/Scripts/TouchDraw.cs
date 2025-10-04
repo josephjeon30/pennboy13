@@ -37,26 +37,6 @@ public class TouchDraw : MonoBehaviour
         start = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    bool checkStraight()
-    {
-        bool isStraight = true;
-        double averageSlope = (end.y - start.y) / (end.x - start.x);
-
-        Vector3[] linePoints = new Vector3[line.positionCount];
-        line.GetPositions(linePoints);
-        for (int i = 0; i < linePoints.Length - 3; i += 3)
-        {
-            Vector3 p1 = linePoints[i];
-            Vector3 p2 = linePoints[i + 3];
-            double currSlope = (p2.y - p1.y) / (p2.x - p1.x);
-            if (System.Math.Abs((averageSlope - currSlope) / averageSlope) > 100)
-            {
-                isStraight = false;
-            }
-        }
-        return isStraight;
-    }
-
     double getSlope(double x1, double y1, double x2, double y2)
     {
         if (end.x == start.x)
@@ -75,7 +55,6 @@ public class TouchDraw : MonoBehaviour
         {
             return (y2- y1) / (x2- x1);
         }
-        //return (y2- y1) / (x2- x1);
     }
 
 
@@ -150,49 +129,9 @@ public class TouchDraw : MonoBehaviour
         StopCoroutine(drawing);
         end = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         string lineType = checkLineTypeSimplified();
-        // bool isStraight = true;
-        // Vector3[] linePoints = new Vector3[line.positionCount];
-        // line.GetPositions(linePoints);
-
-        // // double avgSlope = -1;
-        // // if (linePoints.Length > 1)
-        // // {
-        // //     avgSlope = (linePoints[1].y - linePoints[0].y) / (linePoints[1].x - linePoints[0].x);
-        // // }
-        // for (int i = 0; i < linePoints.Length - 7; i += 6)
-        // {
-
-        //     // double newSlope = (linePoints[i + 1].y - linePoints[i].y) / (linePoints[i + 1].x - linePoints[i].x);
-        //     // if (Mathf.Abs((avgSlope - newSlope)/avgSlope) > .2)
-        //     // {
-        //     //     Debug.Log(Mathf.Abs((avgSlope - newSlope)/avgSlope));
-        //     //     isStraight = false; 
-        //     // }
-        //     Vector3 p1 = linePoints[i];
-        //     Vector3 p2 = linePoints[i + 3];
-        //     Vector3 p3 = linePoints[i + 6];
-
-        //     // Calculate vectors
-        //     Vector3 v1 = p2 - p1;
-        //     Vector3 v2 = p3 - p1;
-
-        //     // Calculate the cross product magnitude
-        //     // If points are collinear, the magnitude of the cross product will be zero
-        //     double crossProductMagnitude = Vector3.Cross(v1, v2).magnitude;
-
-        //     // Use a small tolerance for doubleing-point comparisons
-        //     if (isStraight && crossProductMagnitude > 0.8f) // Adjust tolerance as needed
-        //     {
-        //         Debug.Log(crossProductMagnitude);
-        //         isStraight = false; // The line is not straight
-        //     }
-        // }
-        // if (isStraight)
-        // {
-        //     Debug.Log(lineType);
-        // }
-        Debug.Log(lineType);
         
+        Debug.Log(lineType);
+
         Destroy(line);
     }
 

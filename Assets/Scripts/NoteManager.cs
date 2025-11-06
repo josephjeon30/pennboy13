@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using System;
 
 public class NoteManager : MonoBehaviour
 {
+	public static event UnityAction catchFish;
 	private Transform noteSpawnerTransform;
 	private Transform noteReceiverTransform;
 	private Transform noteCanvasTransform;
@@ -101,6 +104,11 @@ public class NoteManager : MonoBehaviour
     		noteList.RemoveFirst();
     		lastNote = currentBeat;
     	}
+		if (noteList.Count <= 0 && alive_pool.Count <= 0)
+        {
+			Debug.Log("OVER!!");
+            catchFish?.Invoke();
+        }
 
     	currentBeat++;
     }

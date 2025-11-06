@@ -15,6 +15,11 @@ public class TouchDraw : MonoBehaviour
     Vector3 start;
     Vector3 end;
 
+    // Color c1 = new Color(0.5f, 0.9f, 1, 1);
+    // Color c2 = new Color(0.5f, 0.9f, 1, 0);
+    Color c1 = new Color(1, 0, 0, 1);
+    Color c2 = new Color(1, 0, 0, 0.3f);
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -147,6 +152,9 @@ public class TouchDraw : MonoBehaviour
         //LineRenderer line = newGameObject.GetComponent<LineRenderer>();
         line = newGameObject.GetComponent<LineRenderer>();
         line.positionCount = 0;
+        //line.material.SetColor("_Color", Color.blue);
+        line.material = new Material(Shader.Find("Sprites/Default"));
+        line.SetColors(c1, c2);
         //line.material.SetColor("_Color", Color.blue);
 
         while (true)

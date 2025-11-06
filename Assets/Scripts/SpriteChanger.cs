@@ -90,6 +90,8 @@ public class SpriteChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        TouchDraw.horizontalSwipe += LeanForward;
+        TouchDraw.verticalSwipe += LeanBack;
         // Method to change sprite (space key)
         if (Input.GetKeyDown(KeyCode.Space))
         {

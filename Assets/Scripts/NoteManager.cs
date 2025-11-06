@@ -53,42 +53,48 @@ public class NoteManager : MonoBehaviour
         
     }
 
-    void Update()
+	void Update()
+	{
+		
+		if (Input.GetKeyDown("space"))
+		{
+			hitNote();
+		}
+	}
+	
+	public void hitNote()
     {
-    	if (Input.GetKeyDown("space"))
-        {
-            bool note_processed = false;
-            for (LinkedListNode<Note> node = alive_pool.First; !note_processed && node != null; node = node.Next)
-            {
-            	if (Mathf.Abs(node.Value.TimeLeft()) < MISS)
-            	{
-            		float dev = Mathf.Abs(node.Value.TimeLeft());
-            		node.Value.Die();
-            		note_processed = true;
-            		if (dev <= GOOD)
-            		{
-            			combo++;
-            			if (dev <= PERFECT)
-            			{
-            				Debug.Log("PERFECT");
-            			}
-            			else if (dev <= GREAT)
-            			{
-            				Debug.Log("GREAT");
-            			}
-            			else
-            			{
-            				Debug.Log("GOOD");
-            			}
-            		}
-            		else
-            		{
-            			combo = 0;
-            			Debug.Log("MISS");
-            		}
-            	}
-            } 
-        }
+        bool note_processed = false;
+			for (LinkedListNode<Note> node = alive_pool.First; !note_processed && node != null; node = node.Next)
+			{
+				if (Mathf.Abs(node.Value.TimeLeft()) < MISS)
+				{
+					float dev = Mathf.Abs(node.Value.TimeLeft());
+					node.Value.Die();
+					note_processed = true;
+					if (dev <= GOOD)
+					{
+						combo++;
+						if (dev <= PERFECT)
+						{
+							Debug.Log("PERFECT");
+						}
+						else if (dev <= GREAT)
+						{
+							Debug.Log("GREAT");
+						}
+						else
+						{
+							Debug.Log("GOOD");
+						}
+					}
+					else
+					{
+						combo = 0;
+						Debug.Log("MISS");
+					}
+				}
+			}
     }
 
 

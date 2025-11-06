@@ -2,9 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
+using System;
 public class TouchDraw : MonoBehaviour
 {
+    public static event UnityAction horizontalSwipe;
+    public static event UnityAction verticalSwipe;
+    
+
     Coroutine drawing;
     LineRenderer line;
     Vector3 start;
@@ -71,6 +76,7 @@ public class TouchDraw : MonoBehaviour
             upperSlopeBound = 7.0;
             lowerSlopeBound = 7.0;
             lineType = "VERTICAL";
+            verticalSwipe?.Invoke();
         }
         //diagonal up
         else if (averageSlope < 8.0 && averageSlope > 0.15)
@@ -92,6 +98,7 @@ public class TouchDraw : MonoBehaviour
             upperSlopeBound = .3;
             lowerSlopeBound = -.3;
             lineType = "HORIZONTAL";
+            horizontalSwipe?.Invoke();
         }
 
         Vector3[] linePoints = new Vector3[line.positionCount];

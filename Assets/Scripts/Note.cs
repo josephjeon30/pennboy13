@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Note : MonoBehaviour
 {
@@ -9,6 +10,13 @@ public class Note : MonoBehaviour
 	public float timeElapsed;
 	public LinkedList<Note> dead_pool;
 	public LinkedList<Note> alive_pool;
+	public string dirOfNote;
+	public string typeOfNote;
+
+	public NoteManager nm;
+
+	public Image img;
+
 
     // Update is called once per frame
     void Update()
@@ -20,6 +28,7 @@ public class Note : MonoBehaviour
     	}
     	else
     	{
+    		//nm.playMissSFX();
     		Die();
     	}
     }
@@ -34,5 +43,15 @@ public class Note : MonoBehaviour
     	alive_pool.Remove(this);
 		dead_pool.AddLast(this);
 		gameObject.SetActive(false);
+    }
+
+    public void ResetColor()
+    {
+    	img.color = Color.white;
+    }
+
+    public void GrayOut()
+    {
+    	img.color = Color.gray;
     }
 }

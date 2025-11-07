@@ -9,6 +9,7 @@ public class TouchDraw : MonoBehaviour
     LineRenderer line;
     Vector3 start;
     Vector3 end;
+    bool debugMode = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,15 +20,10 @@ public class TouchDraw : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)) {
-            StartLine();
-        }
-        if(Input.GetMouseButtonUp(0)) {
-            FinishLine();
-        }
+
     }
 
-    void StartLine()
+    public void StartLine()
     {
         if (drawing != null)
         {
@@ -70,21 +66,42 @@ public class TouchDraw : MonoBehaviour
         {
             upperSlopeBound = 7.0;
             lowerSlopeBound = 7.0;
-            lineType = "VERTICAL";
+            if (end.y > start.y)
+            {
+                lineType = "UP";
+            }
+            else
+            {
+                lineType = "DOWN";
+            }
         }
         //diagonal up
         else if (averageSlope < 8.0 && averageSlope > 0.15)
         {
             upperSlopeBound = 10.0;
             lowerSlopeBound = .02;
-            lineType = "DIAGONAL_UP";
+            if (end.y > start.y)
+            {
+                lineType = "UPRIGHT";
+            }
+            else
+            {
+                lineType = "DOWNLEFT";
+            }
         }
         // diagonal down
         else if (averageSlope > -8.0 && averageSlope < -0.15)
         {
             upperSlopeBound = -.02;
             lowerSlopeBound = -10.0;
-            lineType = "DIAGONAL_DOWN";
+            if (end.y > start.y)
+            {
+                lineType = "UPLEFT";
+            }
+            else
+            {
+                lineType = "DOWNRIGHT";
+            }
         }
         //horizontal
         else
@@ -92,47 +109,73 @@ public class TouchDraw : MonoBehaviour
             upperSlopeBound = .3;
             lowerSlopeBound = -.3;
             lineType = "HORIZONTAL";
+            if (end.x > start.x)
+            {
+                lineType = "RIGHT";
+            }
+            else
+            {
+                lineType = "LEFT";
+            }
         }
 
         Vector3[] linePoints = new Vector3[line.positionCount];
         line.GetPositions(linePoints);
         int sampleSize = linePoints.Length / 7;
-        Debug.Log("AVG SLOPE");
-        Debug.Log(averageSlope);
+        if (debugMode)
+        {
+            Debug.Log("AVG SLOPE");
+            Debug.Log(averageSlope);
+        }
         for (int i = 0; i < linePoints.Length - sampleSize; i += sampleSize)
         {
             Vector3 p1 = linePoints[i];
             Vector3 p2 = linePoints[i + sampleSize];
             double currSlope = getSlope(p1.x, p1.y, p2.x, p2.y);
-            Debug.Log(currSlope);
-            if (lineType == "VERTICAL" && System.Math.Abs(currSlope) < lowerSlopeBound)
+
+            if (debugMode)
             {
-                Debug.Log("NOT straight ");
-                Debug.Log(p1);
-                Debug.Log(p2);
                 Debug.Log(currSlope);
+            }
+
+            if ((lineType == "UP" || lineType == "DOWN") && System.Math.Abs(currSlope) < lowerSlopeBound)
+            {
+                if (debugMode)
+                {
+                    Debug.Log("NOT straight ");
+                    Debug.Log(p1);
+                    Debug.Log(p2);
+                    Debug.Log(currSlope);
+                }
                 lineType = "INVALID";
             }
             else if (lineType != "VERTICAL" && (currSlope > upperSlopeBound || currSlope < lowerSlopeBound))
             {
-                Debug.Log("NOT straight ");
-                Debug.Log(p1);
-                Debug.Log(p2);
-                Debug.Log(currSlope);
+                if (debugMode)
+                {
+                    Debug.Log("NOT straight ");
+                    Debug.Log(p1);
+                    Debug.Log(p2);
+                    Debug.Log(currSlope);
+                }
                 lineType = "INVALID";
             }
         }
         return lineType;
     }
-    void FinishLine()
+    public string FinishLine()
     {
         StopCoroutine(drawing);
         end = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         string lineType = checkLineTypeSimplified();
-        
-        Debug.Log(lineType);
 
-        Destroy(line);
+        if (debugMode)
+        {
+            Debug.Log(lineType);
+        }
+
+        Destroy(line.gameObject);
+        return lineType;
     }
 
     IEnumerator DrawLine() {

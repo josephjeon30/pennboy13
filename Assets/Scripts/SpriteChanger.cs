@@ -99,6 +99,7 @@ public class SpriteChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+
         TouchDraw.horizontalSwipe += LeanForward;
         TouchDraw.verticalSwipe += LeanBack;
         // Method to change sprite (space key)
@@ -122,9 +123,6 @@ public class SpriteChanger : MonoBehaviour
         {
             LeanBackRod();
         }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Caught();
-        }
+        NoteManager.catchFish += Caught;
     }
 }

@@ -658,7 +658,7 @@ Transform:
   m_GameObject: {fileID: 441711764}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7, y: -0.3, z: 15}
+  m_LocalPosition: {x: -2.7, y: -0.3, z: 27.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -682,21 +682,12 @@ MonoBehaviour:
   forwardSprite: {fileID: 21300000, guid: 1e9b33bce87794fe4a69e4f53f5a2952, type: 3}
   focusedSprite: {fileID: 21300000, guid: 51959b8f67dc8476fa1afd307536e27d, type: 3}
   shockSprite: {fileID: 21300000, guid: 9355cb38970ac4fcb955f460d82ac979, type: 3}
-<<<<<<< Updated upstream
   defaultSprite_rodCast: {fileID: 0}
   defaultSprite_rodUncast: {fileID: 0}
   backSprite_rod: {fileID: 0}
   forwardSprite_rod: {fileID: 0}
   focusedSprite_rod: {fileID: 0}
   shockSprite_rod: {fileID: 0}
-=======
-  defaultSprite_rodCast: {fileID: 21300000, guid: 63ffa1d4d2a22415eaa0e588cdb7b228, type: 3}
-  defaultSprite_rodUncast: {fileID: 21300000, guid: 5a6b8a5e387fc4594b110c1f15aa61e7, type: 3}
-  backSprite_rod: {fileID: 21300000, guid: 641b0600fa43a483cb2598df9a9a1972, type: 3}
-  forwardSprite_rod: {fileID: 21300000, guid: 44fa9e964ef51475c9cf0a2a37556fa9, type: 3}
-  focusedSprite_rod: {fileID: 21300000, guid: 3b9cae0855f324e818e7e125072eb3e3, type: 3}
-  shockSprite_rod: {fileID: 21300000, guid: dc5733cfc9e8349b481c0b8d68870aba, type: 3}
->>>>>>> Stashed changes
 --- !u!1 &557910653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,19 +1097,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980110189}
   serializedVersion: 2
-<<<<<<< Updated upstream
   m_LocalRotation: {x: -0.30881795, y: -0, z: -0, w: 0.9511212}
   m_LocalPosition: {x: -0.19, y: -4.73, z: 27.08}
   m_LocalScale: {x: 1.944844, y: 1.944844, z: 1.944844}
-=======
-  m_LocalRotation: {x: -0.13052624, y: 0, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: 4.5, y: -3, z: 13.73}
-  m_LocalScale: {x: 1.3803345, y: 1.761583, z: 2.1569107}
->>>>>>> Stashed changes
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -15, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -35.976, y: 0, z: 0}
 --- !u!1 &1254654354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,7 +1266,7 @@ Transform:
   m_GameObject: {fileID: 1338090209}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

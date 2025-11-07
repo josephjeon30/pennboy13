@@ -15,6 +15,7 @@ public class SpriteChanger : MonoBehaviour
     public Sprite forwardSprite_rod;
     public Sprite focusedSprite_rod;
     public Sprite shockSprite_rod;
+    public Sprite caughtSprite;
 
     void Start()
     {
@@ -87,6 +88,14 @@ public class SpriteChanger : MonoBehaviour
         }
     }
 
+    public void Caught()
+    {
+        if ((spriteRenderer != null) && (caughtSprite != null)){
+            spriteRenderer.sprite = caughtSprite;
+        }
+    }
+
+
     // Update is called once per frame
     void Update()
     {   
@@ -113,6 +122,9 @@ public class SpriteChanger : MonoBehaviour
         {
             LeanBackRod();
         }
-
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Caught();
+        }
     }
 }

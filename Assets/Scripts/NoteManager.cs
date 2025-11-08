@@ -43,6 +43,8 @@ public class NoteManager : MonoBehaviour
 	[SerializeField] public NoteGroup[] noteGroup;
 
 	public TouchDraw td;
+
+	public DebugTextManager dtm;
 	
 	void Start()
     {
@@ -69,6 +71,7 @@ public class NoteManager : MonoBehaviour
         	MouseUpJudge(dir);
         }
         //DrawConnectors();
+        dtm.UpdateText("Combo: " + combo);
     }
 
     public void DrawConnectors()

@@ -18,8 +18,8 @@ public class TouchDraw : MonoBehaviour
 
     // Color c1 = new Color(0.5f, 0.9f, 1, 1);
     // Color c2 = new Color(0.5f, 0.9f, 1, 0);
-    Color c1 = new Color(1, 0, 0, 1);
-    Color c2 = new Color(1, 0, 0, 0.3f);
+    Color c1 = new Color(1, 0.54f, 0.12f, 1);
+    Color c2 = new Color(1, 0.54f, 0.12f, 0.3f);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

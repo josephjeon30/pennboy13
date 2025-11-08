@@ -64,7 +64,7 @@ public class NoteManager : MonoBehaviour
         	string dir = td.FinishLine();
         	MouseUpJudge(dir);
         }
-        DrawConnectors();
+        //DrawConnectors();
     }
 
     public void DrawConnectors()
@@ -74,7 +74,7 @@ public class NoteManager : MonoBehaviour
     	{
     		if (node.Value.typeOfNote == "StartHold")
     		{
-    			while (counter > connectorTransforms.Count)
+    			while (counter >= connectorTransforms.Count)
     			{
     				connectorTransforms.Add(Instantiate(connector, noteCanvasTransform).GetComponent<Image>().GetComponent<RectTransform>());
     			}
@@ -98,8 +98,9 @@ public class NoteManager : MonoBehaviour
     		}
     		else
     		{
-    			if (counter > connectorTransforms.Count)
+    			while (counter >= connectorTransforms.Count)
     			{
+    				
     				connectorTransforms.Add(Instantiate(connector, noteCanvasTransform).GetComponent<Image>().GetComponent<RectTransform>());
     			}
 	    		connectorTransforms[counter].offsetMin = new Vector2(noteReceiverTransform.position.x, connectorTransforms[counter].offsetMin.y);
@@ -286,8 +287,6 @@ public class NoteManager : MonoBehaviour
         		break;
         }
         note.transform.rotation = Quaternion.Euler(0,0, newRotation);
-
-        connectorTransforms.Add(Instantiate(connector, noteCanvasTransform).GetComponent<Image>().GetComponent<RectTransform>());
     }
 
     public void playHitSFX()

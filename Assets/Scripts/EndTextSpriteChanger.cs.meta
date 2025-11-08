@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 75bc883017f614a979ede67b5220a475
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - spriteRenderer: {instanceID: 0}
+  - defaultSprite: {fileID: 21300000, guid: 3533b51b271c344349755c20023dbe46, type: 3}
+  - fishCaught: {fileID: 21300000, guid: bbf436536771341cab54829e238aa149, type: 3}
+  - fishLost: {fileID: 21300000, guid: dc5733cfc9e8349b481c0b8d68870aba, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

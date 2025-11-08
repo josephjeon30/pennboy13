@@ -2,14 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TouchDraw : MonoBehaviour
 {
+    public static event UnityAction horizontalSwipe;
+    public static event UnityAction verticalSwipe;
+    
+
     Coroutine drawing;
     LineRenderer line;
     Vector3 start;
     Vector3 end;
     bool debugMode = false;
+
+    // Color c1 = new Color(0.5f, 0.9f, 1, 1);
+    // Color c2 = new Color(0.5f, 0.9f, 1, 0);
+    Color c1 = new Color(1, 0, 0, 1);
+    Color c2 = new Color(1, 0, 0, 0.3f);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -74,6 +84,8 @@ public class TouchDraw : MonoBehaviour
             {
                 lineType = "DOWN";
             }
+
+            verticalSwipe?.Invoke();
         }
         //diagonal up
         else if (averageSlope < 8.0 && averageSlope > 0.15)
@@ -108,7 +120,7 @@ public class TouchDraw : MonoBehaviour
         {
             upperSlopeBound = .3;
             lowerSlopeBound = -.3;
-            lineType = "HORIZONTAL";
+
             if (end.x > start.x)
             {
                 lineType = "RIGHT";
@@ -117,6 +129,7 @@ public class TouchDraw : MonoBehaviour
             {
                 lineType = "LEFT";
             }
+            horizontalSwipe?.Invoke();
         }
 
         Vector3[] linePoints = new Vector3[line.positionCount];
@@ -183,6 +196,9 @@ public class TouchDraw : MonoBehaviour
         //LineRenderer line = newGameObject.GetComponent<LineRenderer>();
         line = newGameObject.GetComponent<LineRenderer>();
         line.positionCount = 0;
+        //line.material.SetColor("_Color", Color.blue);
+        line.material = new Material(Shader.Find("Sprites/Default"));
+        line.SetColors(c1, c2);
         //line.material.SetColor("_Color", Color.blue);
 
         while (true)

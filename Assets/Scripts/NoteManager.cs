@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class NoteManager : MonoBehaviour
 {
+	public static event UnityAction catchFish;
 	[HideInInspector] public Transform noteSpawnerTransform;
 	[HideInInspector] public Transform noteReceiverTransform;
 	private Transform noteCanvasTransform;
@@ -19,11 +22,12 @@ public class NoteManager : MonoBehaviour
 	private LinkedList<Note> dead_pool = new LinkedList<Note>();
 	public GameObject notePrefab;
 
-	public event Action<Note> onNoteSpawn = delegate{};
-
 	private int currentBeat = 0;
 
 	private int combo = 0;
+
+	[SerializeField] private GameObject connector;
+	private List<RectTransform> connectorTransforms = new List<RectTransform>();
 
 	// 	time radius of judgements
 	//	if no notes are "detected" during a click, no punishment or reward
@@ -60,6 +64,50 @@ public class NoteManager : MonoBehaviour
         	string dir = td.FinishLine();
         	MouseUpJudge(dir);
         }
+        DrawConnectors();
+    }
+
+    public void DrawConnectors()
+    {
+    	int counter = 0;
+    	for (LinkedListNode<Note> node = alive_pool.First; node != null; node = node.Next)
+    	{
+    		if (node.Value.typeOfNote == "StartHold")
+    		{
+    			while (counter > connectorTransforms.Count)
+    			{
+    				connectorTransforms.Add(Instantiate(connector, noteCanvasTransform).GetComponent<Image>().GetComponent<RectTransform>());
+    			}
+    			connectorTransforms[counter].offsetMin = new Vector2(node.Value.transform.position.x, connectorTransforms[counter].offsetMin.y);
+    			node = node.Next;
+    			if (node != null)
+    			{
+	    			if (node.Value)
+	    			{
+	    				connectorTransforms[counter].offsetMax = new Vector2(node.Value.transform.position.x, connectorTransforms[counter].offsetMin.y);
+	    			}
+	    			else
+	    			{
+	    				connectorTransforms[counter].offsetMax = new Vector2(noteSpawnerTransform.transform.position.x, connectorTransforms[counter].offsetMin.y);
+	    			}
+	    		}
+	    		else
+	    		{
+	    			break;
+	    		}
+    		}
+    		else
+    		{
+    			if (counter > connectorTransforms.Count)
+    			{
+    				connectorTransforms.Add(Instantiate(connector, noteCanvasTransform).GetComponent<Image>().GetComponent<RectTransform>());
+    			}
+	    		connectorTransforms[counter].offsetMin = new Vector2(noteReceiverTransform.position.x, connectorTransforms[counter].offsetMin.y);
+	    		connectorTransforms[counter].offsetMax = new Vector2(node.Value.transform.position.x, connectorTransforms[counter].offsetMax.y);
+	    	}
+	    	counter++;
+    	}
+    	connectorTransforms = connectorTransforms.GetRange(0, counter);
     }
 
     public void MouseUpJudge(string dir)
@@ -95,6 +143,8 @@ public class NoteManager : MonoBehaviour
         			else
         			{
         				Debug.Log("DOES NOT MATCH!");
+        				combo = 0;
+        				playMissSFX();
         			}
         		}
         		else
@@ -171,6 +221,10 @@ public class NoteManager : MonoBehaviour
     		Spawn(noteList.First.Value.dirOfNote, noteList.First.Value.typeOfNote);
     		noteList.RemoveFirst();
     	}
+		if (noteList.Count <= 0 && alive_pool.Count <= 0)
+        {
+            catchFish?.Invoke();
+        }
 
     	currentBeat++;
     }
@@ -233,7 +287,7 @@ public class NoteManager : MonoBehaviour
         }
         note.transform.rotation = Quaternion.Euler(0,0, newRotation);
 
-        onNoteSpawn.Invoke(note);
+        connectorTransforms.Add(Instantiate(connector, noteCanvasTransform).GetComponent<Image>().GetComponent<RectTransform>());
     }
 
     public void playHitSFX()

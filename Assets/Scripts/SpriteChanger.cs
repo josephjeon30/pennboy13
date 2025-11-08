@@ -9,12 +9,26 @@ public class SpriteChanger : MonoBehaviour
     public Sprite forwardSprite;
     public Sprite focusedSprite;
     public Sprite shockSprite;
+    public Sprite defaultSprite_rodCast;
+    public Sprite defaultSprite_rodUncast;
+    public Sprite backSprite_rod;
+    public Sprite forwardSprite_rod;
+    public Sprite focusedSprite_rod;
+    public Sprite shockSprite_rod;
+    public Sprite caughtSprite;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if ((spriteRenderer != null) && (defaultSprite != null)){
-            spriteRenderer.sprite = defaultSprite;
+        if ((spriteRenderer != null) && (defaultSprite_rodUncast != null)){
+            spriteRenderer.sprite = defaultSprite_rodUncast;
+        }
+    }
+
+    public void Cast()
+    {
+        if ((spriteRenderer != null) && (defaultSprite_rodCast != null)){
+            spriteRenderer.sprite = defaultSprite_rodCast;
         }
     }
 
@@ -25,6 +39,13 @@ public class SpriteChanger : MonoBehaviour
         }
     }
 
+    public void LeanBackRod()
+    {
+        if ((spriteRenderer != null) && (backSprite_rod != null)){
+            spriteRenderer.sprite = backSprite_rod;
+        }
+    }
+
     public void LeanForward()
     {
         if ((spriteRenderer != null) && (forwardSprite != null)){
@@ -32,10 +53,24 @@ public class SpriteChanger : MonoBehaviour
         }
     }
 
-    public void LoseFish()
+    public void LeanForwardRod()
+    {
+        if ((spriteRenderer != null) && (forwardSprite_rod != null)){
+            spriteRenderer.sprite = forwardSprite_rod;
+        }
+    }
+
+    public void LoseFishNoRod()
     {
         if ((spriteRenderer != null) && (shockSprite != null)){
             spriteRenderer.sprite = shockSprite;
+        }
+    }
+
+    public void LoseFishRod()
+    {
+        if ((spriteRenderer != null) && (shockSprite_rod != null)){
+            spriteRenderer.sprite = shockSprite_rod;
         }
     }
 
@@ -46,26 +81,48 @@ public class SpriteChanger : MonoBehaviour
         }
     }
 
+    public void FocusRod()
+    {
+        if ((spriteRenderer != null) && (focusedSprite_rod != null)){
+            spriteRenderer.sprite = focusedSprite_rod;
+        }
+    }
+
+    public void Caught()
+    {
+        if ((spriteRenderer != null) && (caughtSprite != null)){
+            spriteRenderer.sprite = caughtSprite;
+        }
+    }
+
+
     // Update is called once per frame
     void Update()
     {   
+
+        TouchDraw.horizontalSwipe += LeanForward;
+        TouchDraw.verticalSwipe += LeanBack;
         // Method to change sprite (space key)
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Focus();
+            FocusRod();
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            Cast();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            LoseFish();
+            LoseFishRod();
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            LeanForward();
+            LeanForwardRod();
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            LeanBack();
+            LeanBackRod();
         }
-
+        NoteManager.catchFish += Caught;
     }
 }

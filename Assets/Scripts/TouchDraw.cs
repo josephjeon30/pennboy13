@@ -6,8 +6,8 @@ using UnityEngine.Events;
 
 public class TouchDraw : MonoBehaviour
 {
-    public static event UnityAction horizontalSwipe;
-    public static event UnityAction verticalSwipe;
+    public static event UnityAction swipeForward;
+    public static event UnityAction swipeBack;
     
 
     Coroutine drawing;
@@ -79,13 +79,15 @@ public class TouchDraw : MonoBehaviour
             if (end.y > start.y)
             {
                 lineType = "UP";
+                swipeBack?.Invoke();
             }
             else
             {
                 lineType = "DOWN";
+                swipeForward?.Invoke();
             }
 
-            verticalSwipe?.Invoke();
+            
         }
         //diagonal up
         else if (averageSlope < 8.0 && averageSlope > 0.15)
@@ -95,10 +97,12 @@ public class TouchDraw : MonoBehaviour
             if (end.y > start.y)
             {
                 lineType = "UPRIGHT";
+                swipeBack?.Invoke();
             }
             else
             {
                 lineType = "DOWNLEFT";
+                swipeForward?.Invoke();
             }
         }
         // diagonal down
@@ -109,10 +113,13 @@ public class TouchDraw : MonoBehaviour
             if (end.y > start.y)
             {
                 lineType = "UPLEFT";
+                swipeBack?.Invoke();
+                
             }
             else
             {
                 lineType = "DOWNRIGHT";
+                swipeForward?.Invoke();
             }
         }
         //horizontal
@@ -124,12 +131,14 @@ public class TouchDraw : MonoBehaviour
             if (end.x > start.x)
             {
                 lineType = "RIGHT";
+                swipeForward?.Invoke();
             }
             else
             {
                 lineType = "LEFT";
+                swipeBack?.Invoke();
             }
-            horizontalSwipe?.Invoke();
+           
         }
 
         Vector3[] linePoints = new Vector3[line.positionCount];

@@ -23,8 +23,8 @@ public class SpriteChanger : MonoBehaviour
         if ((spriteRenderer != null) && (defaultSprite_rodUncast != null)){
             spriteRenderer.sprite = defaultSprite_rodUncast;
         }
-        TouchDraw.horizontalSwipe += LeanForward;
-        TouchDraw.verticalSwipe += LeanBack;
+        TouchDraw.swipeForward += LeanForward;
+        TouchDraw.swipeBack += LeanBack;
         NoteManager.catchFish += Caught;
         NoteManager.loseFish += LoseFishNoRod;
     }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class NoteManager : MonoBehaviour
 {
 	public static event UnityAction catchFish;
+	public static event UnityAction loseFish;
 	[HideInInspector] public Transform noteSpawnerTransform;
 	[HideInInspector] public Transform noteReceiverTransform;
 	private Transform noteCanvasTransform;
@@ -25,6 +26,8 @@ public class NoteManager : MonoBehaviour
 	private int currentBeat = 0;
 
 	private int combo = 0;
+	private int score = 0;
+	private int totalNotesCount = 0;
 
 	[SerializeField] private GameObject connector;
 	private List<RectTransform> connectorTransforms = new List<RectTransform>();
@@ -49,7 +52,8 @@ public class NoteManager : MonoBehaviour
         
         delay = 8 * 60f/200f;
 
-        noteList = new LinkedList<NoteGroup>(noteGroup);
+		noteList = new LinkedList<NoteGroup>(noteGroup);
+		totalNotesCount = noteList.Count;
     }
 
     void Update()
@@ -127,15 +131,18 @@ public class NoteManager : MonoBehaviour
         			combo++;
         			if (dev <= PERFECT)
         			{
-        				Debug.Log("PERFECT");
+						Debug.Log("PERFECT");
+						score += 10;
         			}
         			else if (dev <= GREAT)
         			{
-        				Debug.Log("GREAT");
+						Debug.Log("GREAT");
+						score += 6;
         			}
         			else
         			{
-        				Debug.Log("GOOD");
+						Debug.Log("GOOD");
+						score += 3;
         			}
         			if (dir == node.Value.dirOfNote)
         			{
@@ -152,7 +159,7 @@ public class NoteManager : MonoBehaviour
         		{
         			combo = 0;
         			playMissSFX();
-        			//Debug.Log("MISS");
+        			Debug.Log("MISS");
         		}
         	}
         } 
@@ -174,15 +181,18 @@ public class NoteManager : MonoBehaviour
         			combo++;
         			if (dev <= PERFECT)
         			{
-        				Debug.Log("PERFECT");
+						Debug.Log("PERFECT");
+						score += 10;
         			}
         			else if (dev <= GREAT)
         			{
-        				Debug.Log("GREAT");
+						Debug.Log("GREAT");
+						score += 6;
         			}
         			else
         			{
-        				Debug.Log("GOOD");
+						Debug.Log("GOOD");
+						score += 3;
         			}
         		}
         		else
@@ -223,8 +233,16 @@ public class NoteManager : MonoBehaviour
     		noteList.RemoveFirst();
     	}
 		if (noteList.Count <= 0 && alive_pool.Count <= 0)
-        {
-            catchFish?.Invoke();
+		{
+			if (score > (totalNotesCount*.8*3))
+            {
+                catchFish?.Invoke();
+            }
+			else
+            {
+				loseFish?.Invoke();
+            }
+    
         }
 
     	currentBeat++;

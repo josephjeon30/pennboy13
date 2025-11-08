@@ -11,7 +11,8 @@ public class EndTextSpriteChanger : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if ((spriteRenderer != null) && (defaultSprite != null)){
+        if ((spriteRenderer != null) && (defaultSprite != null))
+        {
             spriteRenderer.sprite = defaultSprite;
         }
     }
@@ -41,6 +42,7 @@ public class EndTextSpriteChanger : MonoBehaviour
     void Update()
     {
         NoteManager.catchFish += fishCaughtDisplay;
+        NoteManager.loseFish += fishLostDisplay;
 
     }
 }

@@ -23,6 +23,10 @@ public class SpriteChanger : MonoBehaviour
         if ((spriteRenderer != null) && (defaultSprite_rodUncast != null)){
             spriteRenderer.sprite = defaultSprite_rodUncast;
         }
+        TouchDraw.horizontalSwipe += LeanForward;
+        TouchDraw.verticalSwipe += LeanBack;
+        NoteManager.catchFish += Caught;
+        NoteManager.loseFish += LoseFishNoRod;
     }
 
     public void Cast()
@@ -99,9 +103,6 @@ public class SpriteChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-
-        TouchDraw.horizontalSwipe += LeanForward;
-        TouchDraw.verticalSwipe += LeanBack;
         // Method to change sprite (space key)
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -123,6 +124,5 @@ public class SpriteChanger : MonoBehaviour
         {
             LeanBackRod();
         }
-        NoteManager.catchFish += Caught;
     }
 }

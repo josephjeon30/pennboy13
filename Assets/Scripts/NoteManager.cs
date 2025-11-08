@@ -70,7 +70,7 @@ public class NoteManager : MonoBehaviour
         	string dir = td.FinishLine();
         	MouseUpJudge(dir);
         }
-        //DrawConnectors();
+        DrawConnectors();
         dtm.UpdateText("Combo: " + combo);
     }
 
@@ -97,10 +97,6 @@ public class NoteManager : MonoBehaviour
 	    			{
 	    				connectorTransforms[counter].offsetMax = new Vector2(noteSpawnerTransform.transform.position.x, connectorTransforms[counter].offsetMin.y);
 	    			}
-	    		}
-	    		else
-	    		{
-	    			break;
 	    		}
     		}
     		else

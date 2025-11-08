@@ -678,32 +678,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 441711765}
-  defaultSprite: {fileID: 21300000, guid: 3533b51b271c344349755c20023dbe46, type: 3}
-  backSprite: {fileID: 21300000, guid: 1cd00ff653b9b46d3b34a341fdfb556e, type: 3}
-  forwardSprite: {fileID: 21300000, guid: 1e9b33bce87794fe4a69e4f53f5a2952, type: 3}
-  focusedSprite: {fileID: 21300000, guid: 51959b8f67dc8476fa1afd307536e27d, type: 3}
-  shockSprite: {fileID: 21300000, guid: 9355cb38970ac4fcb955f460d82ac979, type: 3}
-  defaultSprite_rodCast: {fileID: 0}
-  defaultSprite_rodUncast: {fileID: 0}
-  backSprite_rod: {fileID: 0}
-  forwardSprite_rod: {fileID: 0}
-  focusedSprite_rod: {fileID: 0}
-  shockSprite_rod: {fileID: 0}
-  caughtSprite: {fileID: 0}
---- !u!114 &441711768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441711764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b3557bf724bc445a8bd53cf415f8776, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pulseSize: 2
-  returnSpeed: 5
+  defaultSprite: {fileID: 21300000, guid: 5a6b8a5e387fc4594b110c1f15aa61e7, type: 3}
+  backSprite: {fileID: 21300000, guid: 641b0600fa43a483cb2598df9a9a1972, type: 3}
+  forwardSprite: {fileID: 21300000, guid: 44fa9e964ef51475c9cf0a2a37556fa9, type: 3}
+  focusedSprite: {fileID: 21300000, guid: 3b9cae0855f324e818e7e125072eb3e3, type: 3}
+  shockSprite: {fileID: 21300000, guid: dc5733cfc9e8349b481c0b8d68870aba, type: 3}
+  defaultSprite_rodCast: {fileID: 21300000, guid: 63ffa1d4d2a22415eaa0e588cdb7b228, type: 3}
+  defaultSprite_rodUncast: {fileID: 21300000, guid: 5a6b8a5e387fc4594b110c1f15aa61e7, type: 3}
+  backSprite_rod: {fileID: 21300000, guid: 641b0600fa43a483cb2598df9a9a1972, type: 3}
+  forwardSprite_rod: {fileID: 21300000, guid: 44fa9e964ef51475c9cf0a2a37556fa9, type: 3}
+  focusedSprite_rod: {fileID: 21300000, guid: 3b9cae0855f324e818e7e125072eb3e3, type: 3}
+  shockSprite_rod: {fileID: 21300000, guid: dc5733cfc9e8349b481c0b8d68870aba, type: 3}
+  caughtSprite: {fileID: 21300000, guid: bbf436536771341cab54829e238aa149, type: 3}
 --- !u!1 &557910653
 GameObject:
   m_ObjectHideFlags: 0

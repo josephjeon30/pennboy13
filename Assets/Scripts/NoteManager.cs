@@ -11,6 +11,7 @@ public class NoteManager : MonoBehaviour
 	[HideInInspector] public Transform noteSpawnerTransform;
 	[HideInInspector] public Transform noteReceiverTransform;
 	private Transform noteCanvasTransform;
+	private Transform noteCanvasTransformLINES;
 
 	public AudioSource audioSource;
 	public AudioClip hitSound;
@@ -19,9 +20,12 @@ public class NoteManager : MonoBehaviour
 	private float delay;
 
 	private LinkedList<NoteGroup> noteList;
+	public LinkedList<Note> alive_pool_LINES = new LinkedList<Note>();
 	public LinkedList<Note> alive_pool = new LinkedList<Note>();
 	private LinkedList<Note> dead_pool = new LinkedList<Note>();
+	private LinkedList<Note> dead_pool_LINES = new LinkedList<Note>();
 	public GameObject notePrefab;
+	public GameObject linePrefab;
 
 	private int currentBeat = 0;
 
@@ -50,12 +54,14 @@ public class NoteManager : MonoBehaviour
     {
         noteSpawnerTransform = GameObject.Find("NoteSpawner").transform;
         noteReceiverTransform = GameObject.Find("NoteReceiver").transform;
-        noteCanvasTransform = GameObject.Find("Image").transform;
+		noteCanvasTransform = GameObject.Find("Image").transform;
+		noteCanvasTransformLINES = GameObject.Find("Image").transform;
         
         delay = 8 * 60f/200f;
 
 		noteList = new LinkedList<NoteGroup>(noteGroup);
 		totalNotesCount = noteList.Count;
+		//DrawConnectors();
     }
 
     void Update()
@@ -70,7 +76,6 @@ public class NoteManager : MonoBehaviour
         	string dir = td.FinishLine();
         	MouseUpJudge(dir);
         }
-        DrawConnectors();
         dtm.UpdateText("Combo: " + combo);
     }
 
@@ -227,8 +232,16 @@ public class NoteManager : MonoBehaviour
     public void Proceed()
     {
     	if (noteList.Count > 0 && currentBeat == noteList.First.Value.startTime)
-    	{
-    		Spawn(noteList.First.Value.dirOfNote, noteList.First.Value.typeOfNote);
+		{
+			Debug.Log(noteList.Count);
+			float timeToNextNote = 0f;
+			if(noteList.First.Next != null && noteList.Count%2 == 0)
+            {
+				Debug.Log("MAKE LINE");
+				timeToNextNote = noteList.First.Next.Value.startTime - noteList.First.Value.startTime;
+				Spawn("RIGHT", noteList.First.Value.typeOfNote, timeToNextNote, true);
+            }
+    		Spawn(noteList.First.Value.dirOfNote, noteList.First.Value.typeOfNote, timeToNextNote, false);
     		noteList.RemoveFirst();
     	}
 		if (noteList.Count <= 0 && alive_pool.Count <= 0)
@@ -248,62 +261,87 @@ public class NoteManager : MonoBehaviour
     }
 
 
-    public void Spawn(string dirOfNote, string typeOfNote)
-    {
-    	Note note;
-    	if (dead_pool.Count > 0) 
-    	{
-    		note = dead_pool.First.Value;
-    		dead_pool.RemoveFirst();
-    		note.gameObject.SetActive(true);
-    	}
-    	else 
-    	{
-    		note = Instantiate(notePrefab, noteCanvasTransform).GetComponent<Note>();
-    		note.nm = this;
-    		note.dead_pool = dead_pool;
-    		note.alive_pool = alive_pool;
-    		note.spawnPos = noteSpawnerTransform;
-        	note.exitPos = noteReceiverTransform;
+    public void Spawn(string dirOfNote, string typeOfNote, float timeToNext, bool isLine)
+	{
+		if (typeOfNote == "StartHold" && isLine)
+		{
+			Note newLine;
+			newLine = Instantiate(linePrefab, noteCanvasTransformLINES).GetComponent<Note>();
+			newLine.nm = this;
+			newLine.dead_pool = dead_pool;
+			newLine.alive_pool = alive_pool_LINES;
+			newLine.spawnPos = noteSpawnerTransform;
+			newLine.exitPos = noteReceiverTransform;
+			alive_pool_LINES.AddLast(newLine);
+			newLine.timeElapsed = 0;
+			newLine.delay = delay;
+			newLine.dirOfNote = "RIGHT";
+			newLine.typeOfNote = typeOfNote;
+			newLine.ResetColor();
+			newLine.posOffset = timeToNext * 20f;
+			Vector3 scaleVec = new Vector3(timeToNext * .6f, 0.5f, 1f);
+			newLine.transform.localScale = scaleVec;
 
-    	}
 
-    	alive_pool.AddLast(note);
-    	note.timeElapsed = 0;
-        note.delay = delay;
-        note.dirOfNote = dirOfNote;
-        note.typeOfNote = typeOfNote;
-        note.ResetColor();
+		}
+		else if (!isLine)
+		{
+			Note note;
+			if (false & dead_pool.Count > 0)
+			{
+				note = dead_pool.First.Value;
+				dead_pool.RemoveFirst();
+				note.gameObject.SetActive(true);
 
-		float newRotation = 0f; 
-        switch (dirOfNote)
-        {
-        	case "RIGHT":
-        		newRotation = 0f;
-        		break;
-        	case "UPRIGHT":
-        		newRotation = 45f;
-        		break;
-        	case "UP":
-        		newRotation = 90f;
-        		break;
-        	case "UPLEFT":
-        		newRotation = 135f;
-        		break;
-        	case "LEFT":
-        		newRotation = 180f;
-        		break;
-        	case "DOWNLEFT":
-        		newRotation = 225f;
-        		break;
-        	case "DOWN":
-        		newRotation = 270f;
-        		break;
-        	case "DOWNRIGHT":
-        		newRotation = 315f;
-        		break;
-        }
-        note.transform.rotation = Quaternion.Euler(0,0, newRotation);
+			}
+			else
+			{
+				note = Instantiate(notePrefab, noteCanvasTransform).GetComponent<Note>();
+				note.nm = this;
+				note.dead_pool = dead_pool;
+				note.alive_pool = alive_pool;
+				note.spawnPos = noteSpawnerTransform;
+				note.exitPos = noteReceiverTransform;
+			}
+			alive_pool.AddLast(note);
+			note.timeElapsed = 0;
+			note.delay = delay;
+			note.posOffset = 0f;
+			note.dirOfNote = dirOfNote;
+			note.typeOfNote = typeOfNote;
+			note.ResetColor();
+
+			float newRotation = 0f;
+			switch (dirOfNote)
+			{
+				case "RIGHT":
+					newRotation = 0f;
+					break;
+				case "UPRIGHT":
+					newRotation = 45f;
+					break;
+				case "UP":
+					newRotation = 90f;
+					break;
+				case "UPLEFT":
+					newRotation = 135f;
+					break;
+				case "LEFT":
+					newRotation = 180f;
+					break;
+				case "DOWNLEFT":
+					newRotation = 225f;
+					break;
+				case "DOWN":
+					newRotation = 270f;
+					break;
+				case "DOWNRIGHT":
+					newRotation = 315f;
+					break;
+			}
+			note.transform.rotation = Quaternion.Euler(0, 0, newRotation);
+		}
+		//Debug.Log(note.typeOfNote);
     }
 
     public void playHitSFX()
@@ -323,6 +361,6 @@ public class NoteGroup
 {
 	[SerializeField] public int startTime;
 	[SerializeField] public string dirOfNote;
-	[SerializeField] public string typeOfNote = "StartHold";
+	[SerializeField] public string typeOfNote;
 	[SerializeField] public int trackNumber = 0;
 }

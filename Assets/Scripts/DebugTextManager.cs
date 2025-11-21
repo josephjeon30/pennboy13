@@ -10,7 +10,6 @@ public class DebugTextManager : MonoBehaviour
     void Start()
     {
         tmProText.fontSize = 36;
-        tmProText.color = Color.green;
     }
 
     public void UpdateText(string newText)

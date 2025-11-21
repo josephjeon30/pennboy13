@@ -1314,7 +1314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 'Combo: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1409,7 +1409,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -49, y: -174.85207}
+  m_AnchoredPosition: {x: 295, y: -174.85207}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1338090209
@@ -1879,6 +1879,7 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: 9494434995562422c9d446c923dea56b, type: 3}
   missSound: {fileID: 8300000, guid: 8a7eeffcd14af47469923dbee28fcc05, type: 3}
   notePrefab: {fileID: 2696547618069744733, guid: d2700eb9122354ceca784d558f88ef5d, type: 3}
+  linePrefab: {fileID: 2696547618069744733, guid: 2fbb8b8720caa4015b800e53f57be0af, type: 3}
   connector: {fileID: 4803422472809281800, guid: 1f28e8e24d112449e984d30beac0eb41, type: 3}
   noteGroup:
   - startTime: 0

@@ -7,11 +7,13 @@ public class Note : MonoBehaviour
 	public Transform spawnPos;
 	public Transform exitPos;
 	public float delay;
+	public float posOffset;
 	public float timeElapsed;
 	public LinkedList<Note> dead_pool;
 	public LinkedList<Note> alive_pool;
 	public string dirOfNote;
 	public string typeOfNote;
+
 
 	public NoteManager nm;
 
@@ -21,10 +23,16 @@ public class Note : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    	if (timeElapsed < delay + 0.2f)
-    	{
-    		transform.position = Vector3.LerpUnclamped(spawnPos.position, exitPos.position, timeElapsed / delay);
-        	timeElapsed += Time.deltaTime;
+    	if (timeElapsed < delay + 2.3f)
+		{
+			float zOffset = 0f;
+			if(posOffset == 0f)
+            {
+				zOffset = 10f;
+            }
+			Vector3 positionXOffset = new Vector3(posOffset, 0f, zOffset);
+    		transform.position = Vector3.LerpUnclamped(spawnPos.position, exitPos.position, timeElapsed / delay) + positionXOffset;
+			timeElapsed += Time.deltaTime;
     	}
     	else
     	{
